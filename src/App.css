@@ -1,0 +1,114 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+margin: 0;
+padding: 0;
+border: 0;
+font-size: 100%;
+font: inherit;
+vertical-align: baseline;
+}
+
+body {
+  font-family: 'Open+Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1;
+  color: white;
+  background:  rgb(6, 81, 211);
+  background: linear-gradient(75deg,#590e76,#1e0576 17%,#1e0576 72%,#1e509d);
+
+  
+}
+ol, ul {
+list-style: none;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: 700;
+}
+
+.game {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  width: 100%;
+  height: 100vh;
+
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 65vh;
+  /* background: url("../img/ktp-background12.png"); */
+  background:  rgba(6,81,211,1);
+  background: linear-gradient(135deg, rgb(34, 18, 115) 0%, rgba(6,81,211,1) 100%);
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  height: 80px;
+  width: 100%;
+  background: rgba(255,255,255, .2);
+}
+
+.header img, .spacer {
+  height: 80px;
+  width: 80px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.body {
+  position: relative;
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 35vh;
+  background: url("../img/ktp-pattern-community-specific-pc.png") center;
+}
+
+.bottom span {
+  margin: auto;
+  font-family: "Quicksand", sans-serif;
+  font-size: 100px;
+  font-weight: 700;
+  text-align: center;
+}
