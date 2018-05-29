@@ -5,10 +5,23 @@ import './App.css';
 class App extends Component {
   constructor() {
     super();
-    this.updateSong = this.updateSong.bind(this);
+    this.addSong = this.addSong.bind(this);
+    
     this.state = {
       songs: { }
     };
+  }
+
+  addSong(title) {
+    const songs = {...this.state.songs};
+    const id = Date.now()
+    songs[id] = {
+      id: id,
+      title: title,
+      chordpro: ''
+    };
+
+    this.setState({songs});
   }
 
   componentWillMount() {
@@ -24,17 +37,17 @@ class App extends Component {
 
   render() {
     return (
-      <div class="game" id="gameArea">
-        <div class="top" id="top">
-            <div class="header">
-                <img class="logo" src="./img/k-caret.png" alt="Klogo" />
-                <div class="title ">
+      <div className="game" id="gameArea">
+        <div className="top" id="top">
+            <div className="header">
+                <img className="logo" src="./img/k-caret.png" alt="Klogo" />
+                <div className="title ">
                     <h1>KAPLAN TPT</h1>
                 </div>
-                <div class="spacer" />
+                <div className="spacer" />
             </div>
         </div>
-        <div class="bottom" id="bottom" />
+        <div className="bottom" id="bottom" />
       </div>
     );
   }
