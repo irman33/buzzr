@@ -1,54 +1,38 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from "react-router-dom";
 import base  from './base'
+import Header from './components/Header';
 import './App.css';
 
 class App extends Component {
   constructor() {
     super();
-    this.addSong = this.addSong.bind(this);
-    
+
     this.state = {
-      songs: { }
+      games: []
     };
   }
 
-  addSong(title) {
-    const songs = {...this.state.songs};
-    const id = Date.now()
-    songs[id] = {
-      id: id,
-      title: title,
-      chordpro: ''
-    };
-
-    this.setState({songs});
-  }
-
-  componentWillMount() {
-    this.songsRef = base.syncState('songs', {
-      context: this,
-      state: 'songs'
-    });
-  }
-
-  componentWillUnmount() {
-    base.removeBinding(this.songsRef);
-  }
+  // <div className="top" id="top">
+  //   <Header />
+  // </div>
+  // <div className="bottom" id="bottom" />
 
   render() {
     return (
-      <div className="game" id="gameArea">
-        <div className="top" id="top">
-            <div className="header">
-                <img className="logo" src="./img/k-caret.png" alt="Klogo" />
-                <div className="title ">
-                    <h1>KAPLAN TPT</h1>
-                </div>
-                <div className="spacer" />
-            </div>
+      <Router>
+        <div className="game" id="gameArea">
+          <Route path="/login" component={Login} />
+          <Route path="/play" component={Play} />
+          <Route path="/host" component={Host} />
         </div>
-        <div className="bottom" id="bottom" />
-      </div>
+      </Router>
     );
   }
 }
