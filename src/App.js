@@ -9,6 +9,8 @@ import firebase from 'firebase';
 import base, { firebaseApp }  from './base'
 import Play from './components/Play';
 import Host from './components/Host';
+import Home from './components/Home';
+import HostRoute from './components/HostRoute';
 import Login from './components/Login';
 import './App.css';
 
@@ -17,18 +19,37 @@ class App extends Component {
     super();
 
     this.state = {
-      games: []
+      games: [],
+      user: {
+        isAuthenticated: false
+      }
     };
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged( user => {
+      if(user) {
+        this.authHandler( { user });
+      }
+    });
   }
 
   authHandler = async (authData) => {
 
+    let user = {
+      uid: authData.user.uid,
+      displayName: authData.user.displayName,
+      email: authData.user.email, 
+      photoURL: authData.user.photoURL,
+      isAuthenticated: true
+    }
+
+    this.setState({ user });
     console.log(authData);
   }
 
   authenticate = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-
     firebaseApp.auth().signInWithPopup(provider).then(this.authHandler);
   }
 
@@ -36,9 +57,10 @@ class App extends Component {
     return (
       <Router>
         <div className="game" id="gameArea">
-          <Route exact path="/" component={Play} />
+          <Route exact path="/" component={ Home } />
           <Route path="/login" render={ () => <Login authenticate={this.authenticate} /> } />
-          <Route path="/host" component={Host} />
+          <HostRoute path="/host" component={ Host } user={ this.state.user } />
+          <HostRoute path="/play" component={ Play } user={ this.state.user } />
         </div>
       </Router>
     );

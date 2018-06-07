@@ -10,35 +10,31 @@ class Host extends Component {
         games: []
       };
     }
-  
-    // <div className="top" id="top">
-    //   <Header />
-    // </div>
-    // <div className="bottom" id="bottom" />
-  
+
     render() {
       return (
         <React.Fragment>
-            <div class="top" id="top">
-                <Header />
-                <div id="topBody" class="body">
-                    <div class="form">
-                            <label for="hostName">Host Name:</label>
-                            <input type="text" id="inputHostName" name="hostName"  placeholder="Host Name"/>
-                            <label for="redTeamName">Red Team Name:</label>
-                            <input type="text" id="inputRedName" name="redTeamName"  placeholder="Red Team"/>
-                            <label for="blueTeamName">Blue Team Name:</label>
-                            <input type="text" id="inputBlueName" name="blueTeamName" placeholder="Blue Team"/>
-                    </div>
-                    <button id="btnCreateGame" class="btn">Create Game</button>
-                    
-                </div>
+          <div className="top" id="top">
+            <Header />
+            <div id="topBody" className="topBody">
+              <div className="form">
+                <label htmlFor="hostName">Host Name:</label>
+                <input type="text" id="inputHostName" name="hostName"  placeholder="Host Name"/>
+                <label htmlFor="redTeamName">Red Team Name:</label>
+                <input type="text" id="inputRedName" name="redTeamName"  placeholder="Red Team"/>
+                <label htmlFor="blueTeamName">Blue Team Name:</label>
+                <input type="text" id="inputBlueName" name="blueTeamName" placeholder="Blue Team"/>
+              </div>
+              <button id="btnCreateGame" className="btn">Create Game</button> 
             </div>
-            <div className="bottom" id="bottom"></div>
+          </div>
+          <div className="bottom" id="bottom">
+                
+          </div>
         </React.Fragment>
       );
     }
   }
   
-  export default Host;
+export default Host;
   

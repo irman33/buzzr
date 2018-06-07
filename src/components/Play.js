@@ -20,20 +20,19 @@ class Play extends Component {
     render() {
       return (
         <React.Fragment>
-            <div className="top" id="top">
-                <Header />
-                <div id="topBody" className="body">
-                    <div className="form">
-                        <label for="gameCode">Game Code:</label>
-                        <input type="text" id="inputGameCode" name="gameCode" placeholder="Enter Game Code" />
-                    </div>
-                    
-                    <button id="btnJoinGame" className="btn btn-primary">Join Game</button>
-                </div>
+          <div className="top" id="top">
+            <Header />
+            <div id="topBody" className="topBody">
+              <div className="form">
+                <label htmlFor="gameCode">Game Code:</label>
+                <input type="text" id="inputGameCode" name="gameCode" placeholder="Enter Game Code" />
+              </div>
+              <button id="btnJoinGame" className="btn btn-primary">Join Game</button>
             </div>
-            <div className="bottom" id="bottom">
+          </div>
+          <div className="bottom" id="bottom">
                 
-            </div>
+          </div>
         </React.Fragment>
       );
     }
