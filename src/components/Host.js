@@ -15,11 +15,8 @@ class Host extends Component {
       return (
         <React.Fragment>
           <div className="top" id="top">
-            <Header />
             <div id="topBody" className="topBody">
               <div className="form">
-                <label htmlFor="hostName">Host Name:</label>
-                <input type="text" id="inputHostName" name="hostName"  placeholder="Host Name"/>
                 <label htmlFor="redTeamName">Red Team Name:</label>
                 <input type="text" id="inputRedName" name="redTeamName"  placeholder="Red Team"/>
                 <label htmlFor="blueTeamName">Blue Team Name:</label>

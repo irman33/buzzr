@@ -1,29 +1,38 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import base  from '../base'
-import Header from './Header';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Redirect, withRouter } from "react-router-dom";
+import base from "../base";
 
-class Login extends Component { 
-    render() {
-      return (
-        <React.Fragment>
-            <div className="top" id="top">
-                <Header />
-                <div id="topBody" className="topBody">
-                </div>
-                <button className="btn btn-primary" onClick={() => this.props.authenticate()}>Sign in to Play</button>
-            </div>
-            <div className="bottom" id="bottom">
-                
-            </div>
-        </React.Fragment>
-      );
-    }
-  }
-
-  Login.propTypes = { 
+class Login extends Component {
+  static propTypes = {
+    user: PropTypes.object,
     authenticate: PropTypes.func.isRequired
+  };
+
+  render() {
+    console.log(this.props);
+
+    const { from } = this.props.location.state || { from: { pathname: "/" } };
+
+    if (this.props.user) {
+      return <Redirect to={from} />;
+    }
+
+    return (
+      <React.Fragment>
+        <div className="top" id="top">
+          <div id="topBody" className="topBody" />
+          <button
+            className="btn btn-primary"
+            onClick={() => this.props.authenticate()}
+          >
+            Sign in to Play
+          </button>
+        </div>
+        <div className="bottom" id="bottom" />
+      </React.Fragment>
+    );
   }
-  
-  export default Login;
-  
+}
+
+export default withRouter(Login);
