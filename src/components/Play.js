@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import base from "../base";
-import Header from "./Header";
 
 class Play extends Component {
   constructor() {

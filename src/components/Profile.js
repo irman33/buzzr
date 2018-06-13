@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 class Profile extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   static propTypes = {
     user: PropTypes.object
   };

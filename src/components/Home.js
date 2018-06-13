@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
-} from "react-router-dom";
-import base from "../base";
-import Header from "./Header";
+import { Link } from "react-router-dom";
 
 class Home extends Component {
   constructor() {

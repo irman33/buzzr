@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Redirect, withRouter } from "react-router-dom";
-import base from "../base";
 
 class Login extends Component {
   static propTypes = {
