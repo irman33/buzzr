@@ -1,36 +1,27 @@
 import React, { Component } from "react";
+import JoinGame from "./JoinGame";
+import TPTGamePlay from "./TPTGamePlay";
 
 class Play extends Component {
   constructor() {
     super();
 
     this.state = {
-      games: []
+      gameCode: null,
+      gameJoined: false
     };
   }
 
+  joinGame = gameCode => {
+    console.log(gameCode);
+
+    this.setState({ gameCode, gameJoined: true });
+  };
+
   render() {
-    return (
-      <React.Fragment>
-        <div className="top" id="top">
-          <div id="topBody" className="topBody">
-            <div className="form">
-              <label htmlFor="gameCode">Game Code:</label>
-              <input
-                type="text"
-                id="inputGameCode"
-                name="gameCode"
-                placeholder="Enter Game Code"
-              />
-            </div>
-            <button id="btnJoinGame" className="btn btn-primary">
-              Join Game
-            </button>
-          </div>
-        </div>
-        <div className="bottom" id="bottom" />
-      </React.Fragment>
-    );
+    if (!this.state.gameJoined) return <JoinGame joinGame={this.joinGame} />;
+
+    return <TPTGamePlay gameCode={this.state.gameCode} />;
   }
 }
 
