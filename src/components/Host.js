@@ -1,37 +1,44 @@
-import React, { Component } from 'react';
-import base  from '../base'
-// import './Host.css';
-import Header from './Header';
-class Host extends Component {
-    constructor() {
-      super();
-  
-      this.state = {
-        games: []
-      };
-    }
+import React, { Component } from "react";
+import base from "../base";
+import CreateGame from "./CreateGame";
+import TPTGameHost from "./TPTGameHost";
 
-    render() {
-      return (
-        <React.Fragment>
-          <div className="top" id="top">
-            <div id="topBody" className="topBody">
-              <div className="form">
-                <label htmlFor="redTeamName">Red Team Name:</label>
-                <input type="text" id="inputRedName" name="redTeamName"  placeholder="Red Team"/>
-                <label htmlFor="blueTeamName">Blue Team Name:</label>
-                <input type="text" id="inputBlueName" name="blueTeamName" placeholder="Blue Team"/>
-              </div>
-              <button id="btnCreateGame" className="btn">Create Game</button> 
-            </div>
-          </div>
-          <div className="bottom" id="bottom">
-                
-          </div>
-        </React.Fragment>
-      );
-    }
+class Host extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      gameCreated: false,
+      game: {}
+    };
   }
-  
+
+  createGame = (gameCode, redTeamName, blueTeamName) => {
+    console.log(gameCode, redTeamName, blueTeamName);
+
+    const game = {
+      gameCode,
+      redTeamName,
+      blueTeamName,
+      redTeam: ["Irman", "Frank", "Louie"],
+      blueTeam: ["Tank", "Bob", "Sam"],
+      redTeamScore: 0,
+      blueTeamScore: 0,
+      buzzer: {
+        buzzerOn: true,
+        buzzedIn: ""
+      }
+    };
+
+    this.setState({ game: game, gameCreated: true });
+  };
+
+  render() {
+    if (!this.state.gameCreated)
+      return <CreateGame createGame={this.createGame} />;
+
+    return <TPTGameHost game={this.state.game} />;
+  }
+}
+
 export default Host;
-  
