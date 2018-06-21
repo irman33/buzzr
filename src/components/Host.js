@@ -4,8 +4,8 @@ import CreateGame from "./CreateGame";
 import TPTGameHost from "./TPTGameHost";
 
 class Host extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       gameCreated: false,
@@ -35,9 +35,9 @@ class Host extends Component {
 
   render() {
     if (!this.state.gameCreated)
-      return <CreateGame createGame={this.createGame} />;
+      return <CreateGame user={this.props.user} createGame={this.createGame} />;
 
-    return <TPTGameHost game={this.state.game} />;
+    return <TPTGameHost user={this.props.user} game={this.state.game} />;
   }
 }
 
