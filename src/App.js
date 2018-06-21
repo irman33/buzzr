@@ -112,11 +112,13 @@ class App extends Component {
             path="/host"
             component={Host}
             authed={this.state.authed}
+            user={this.state.user}
           />
           <PrivateRoute
             path="/play"
             component={Play}
             authed={this.state.authed}
+            user={this.state.user}
           />
         </div>
       </Router>
