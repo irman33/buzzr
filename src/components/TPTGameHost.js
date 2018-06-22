@@ -12,17 +12,26 @@ class TPTGameHost extends Component {
     this.resetBuzzer = this.resetBuzzer.bind(this);
 
     this.state = {
-      game: {}
+      game: {},
+      user: this.props.user
     };
   }
 
   pointsRef = React.createRef();
 
   resetBuzzer() {
-    let game = { ...this.state.game };
-    game.buzzerOn = true;
-    game.buzzedIn = "";
-    this.setState({ game });
+    let gameCode = this.state.game.gameCode;
+    base
+      .post(`games/${gameCode}/buzzer`, {
+        data: { buzzerOn: true, buzzedIn: "" }
+      })
+      .then(() => {
+        //play buzzer sound
+        console.log("buzzed in", { buzzerOn: true, buzzedIn: "" });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   redTeamPlus() {
@@ -65,6 +74,7 @@ class TPTGameHost extends Component {
   render() {
     let redTeamRoster = [];
     let blueTeamRoster = [];
+    let bottom;
 
     if (this.state.game.redTeam) {
       redTeamRoster = this.state.game.redTeam.map((name, i) => (
@@ -73,6 +83,23 @@ class TPTGameHost extends Component {
       blueTeamRoster = this.state.game.blueTeam.map((name, i) => (
         <li key={i}>{name}</li>
       ));
+    }
+
+    if (this.state.game.buzzer) {
+      bottom = this.state.game.buzzer.buzzerOn ? (
+        <div className="bottom" id="bottom">
+          <audio id="buzzerSound" src="buzzer.mp3" />
+        </div>
+      ) : (
+        <div
+          className="bottom"
+          id="bottom"
+          style={{ background: "rgb(238, 16, 16)" }}
+        >
+          <audio id="buzzerSound" src="buzzer.mp3" />
+          <span> IRMAN </span>
+        </div>
+      );
     }
 
     return (
@@ -167,7 +194,7 @@ class TPTGameHost extends Component {
             </button>
           </div>
         </div>
-        <div className="bottom" id="bottom" />
+        {bottom}
       </React.Fragment>
     );
   }

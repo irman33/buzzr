@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import base from "../base";
 
 class TPTGamePlay extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.buzz = this.buzz.bind(this);
 
     this.state = {
-      game: {}
+      game: {},
+      user: this.props.user
     };
   }
 
@@ -21,9 +24,33 @@ class TPTGamePlay extends Component {
     base.removeBinding(this.gameRef);
   }
 
+  buzz() {
+    let gameCode = this.state.game.gameCode;
+    console.log(this.state.user);
+
+    base.fetch(`games/${gameCode}/buzzer`, { asArray: false }).then(buzzer => {
+      console.log(buzzer);
+      if (buzzer.buzzerOn) {
+        base
+          .post(`games/${gameCode}/buzzer`, {
+            data: { buzzerOn: false, buzzedIn: "Irman" }
+          })
+          .then(() => {
+            //play buzzer sound
+            console.log("buzzed in", { buzzerOn: false, buzzedIn: "Irman" });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    });
+  }
+
   render() {
     let redTeamRoster = [];
     let blueTeamRoster = [];
+    let bottom;
+    let teamColors = { red: "rgb(238, 16, 16)", blue: "rgb(27, 90, 207)" };
 
     if (this.state.game.redTeam) {
       redTeamRoster = this.state.game.redTeam.map((name, i) => (
@@ -32,6 +59,26 @@ class TPTGamePlay extends Component {
       blueTeamRoster = this.state.game.blueTeam.map((name, i) => (
         <li key={i}>{name}</li>
       ));
+    }
+
+    if (this.state.game.buzzer) {
+      bottom = this.state.game.buzzer.buzzerOn ? (
+        <div className="bottom" id="bottom">
+          <audio id="buzzerSound" src="buzzer.mp3" />
+          <button id="btnBuzzIn" className="btn btn-buzz" onClick={this.buzz}>
+            BUZZ IN
+          </button>
+        </div>
+      ) : (
+        <div
+          className="bottom"
+          id="bottom"
+          style={{ background: "rgb(238, 16, 16)" }}
+        >
+          <audio id="buzzerSound" src="buzzer.mp3" />
+          <span>{this.props.user.displayName}</span>
+        </div>
+      );
     }
 
     return (
@@ -69,12 +116,7 @@ class TPTGamePlay extends Component {
             </div>
           </div>
         </div>
-        <div className="bottom" id="bottom">
-          <audio id="buzzerSound" src="buzzer.mp3" />
-          <button id="btnBuzzIn" className="btn btn-buzz">
-            BUZZ IN
-          </button>
-        </div>
+        {bottom}
       </React.Fragment>
     );
   }
