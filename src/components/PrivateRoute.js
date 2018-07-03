@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-const PrivateRoute = ({ component: Component, authed, user, ...rest }) => {
+const PrivateRoute = ({ component: Component, authed, path, ...rest }) => {
   return (
     <Route
-      {...rest}
+      path={path}
       render={props =>
         authed === true ? (
-          <Component {...props} user={user} />
+          <Component {...props} {...rest} />
         ) : (
           <Redirect
             to={{
