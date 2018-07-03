@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import base from "../base";
 import CreateGame from "./CreateGame";
 import TPTGameHost from "./TPTGameHost";
 
@@ -13,15 +12,23 @@ class Host extends Component {
     };
   }
 
-  createGame = (gameCode, redTeamName, blueTeamName) => {
-    console.log(gameCode, redTeamName, blueTeamName);
+  createGame = (redTeamName, blueTeamName) => {
+    console.log(redTeamName, blueTeamName);
+
+    let gameCode = null;
+
+    while (this.props.activeGames.includes(gameCode) || gameCode === null) {
+      gameCode = Math.floor(Math.random() * 999) + 1;
+    }
+
+    console.log(gameCode);
 
     const game = {
       gameCode,
       redTeamName,
       blueTeamName,
-      redTeam: ["Irman", "Frank", "Louie"],
-      blueTeam: ["Tank", "Bob", "Sam"],
+      redTeam: [],
+      blueTeam: [],
       redTeamScore: 0,
       blueTeamScore: 0,
       buzzer: {
