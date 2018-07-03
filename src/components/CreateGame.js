@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Host extends Component {
+class CreateGame extends Component {
   constructor() {
     super();
 
@@ -19,7 +19,7 @@ class Host extends Component {
     const redTeamName = this.redTeamNameRef.current.value;
     const blueTeamName = this.blueTeamNameRef.current.value;
 
-    this.props.createGame(200, redTeamName, blueTeamName);
+    this.props.createGame(redTeamName, blueTeamName);
   }
 
   render() {
@@ -27,6 +27,7 @@ class Host extends Component {
       <React.Fragment>
         <div className="top" id="top">
           <div id="topBody" className="topBody">
+            <h2>Create New Game: </h2>
             <div className="form">
               <label htmlFor="redTeamName">Red Team Name:</label>
               <input
@@ -60,4 +61,4 @@ class Host extends Component {
   }
 }
 
-export default Host;
+export default CreateGame;
