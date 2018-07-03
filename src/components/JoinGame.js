@@ -22,28 +22,23 @@ class JoinGame extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="top" id="top">
-          <div id="topBody" className="topBody">
+        <div className="top">
+          <div className="topBody">
             <div className="form">
               <label htmlFor="gameCode">Game Code:</label>
               <input
                 ref={this.gameCodeRef}
                 type="text"
-                id="inputGameCode"
                 name="gameCode"
                 placeholder="Enter Game Code"
               />
             </div>
-            <button
-              id="btnJoinGame"
-              className="btn btn-primary"
-              onClick={this.enterGamecode}
-            >
+            <button className="btn btn-primary" onClick={this.enterGamecode}>
               Join Game
             </button>
           </div>
         </div>
-        <div className="bottom" id="bottom" />
+        <div className="bottom" />
       </React.Fragment>
     );
   }
