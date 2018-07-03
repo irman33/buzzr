@@ -445,7 +445,7 @@ input[type="text"] {
   color: #1e0576;
 }
 
-.radio-wrapper {
+.form-wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -453,7 +453,7 @@ input[type="text"] {
   overflow: hidden;
 }
 
-.radio--title {
+.radio__title {
   margin: 0 auto;
 }
 
@@ -462,17 +462,7 @@ input[type="text"] {
   display: flex;
   flex-direction: column;
 }
-
-.radio-wrapper input {
-  position: absolute !important;
-  clip: rect(0, 0, 0, 0);
-  height: 1px;
-  width: 1px;
-  border: 0;
-  overflow: hidden;
-}
-
-.radio-wrapper label {
+.radio__wrapper {
   margin: 5px auto;
   display: inline-block;
   width: auto;
@@ -487,21 +477,10 @@ input[type="text"] {
   border-radius: 50px;
   overflow: hidden;
   line-height: 25px;
-  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3),
-    0 1px rgba(255, 255, 255, 0.1);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
-  -webkit-transition: all 0.1s ease-in-out;
-  -moz-transition: all 0.1s ease-in-out;
-  -ms-transition: all 0.1s ease-in-out;
-  -o-transition: all 0.1s ease-in-out;
   transition: all 0.1s ease-in-out;
 }
-
-.radio-wrapper label:hover {
-  cursor: pointer;
-}
-
-.radio-wrapper input:checked + label {
+.radio__wrapper--active {
   color: white;
   padding: 9px 5px;
   border: 2px white solid;
@@ -509,12 +488,19 @@ input[type="text"] {
   box-shadow: none;
 }
 
-.radio-wrapper label:first-of-type {
+.radio__wrapper--red {
   background-color: #ee1010;
 }
 
-.radio-wrapper label:last-of-type {
+.radio__wrapper--blue {
   background-color: #1b5acf;
+}
+
+.radio__radio {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  opacity: 0;
 }
 
 @media only screen and (max-width: 850px) {
