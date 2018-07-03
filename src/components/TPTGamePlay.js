@@ -58,6 +58,8 @@ class TPTGamePlay extends Component {
       redTeamRoster = this.state.game.redTeam.map((name, i) => (
         <li key={i}>{name}</li>
       ));
+    }
+    if (this.state.game.blueTeam) {
       blueTeamRoster = this.state.game.blueTeam.map((name, i) => (
         <li key={i}>{name}</li>
       ));

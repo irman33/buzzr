@@ -80,6 +80,8 @@ class TPTGameHost extends Component {
       redTeamRoster = this.state.game.redTeam.map((name, i) => (
         <li key={i}>{name}</li>
       ));
+    }
+    if (this.state.game.blueTeam) {
       blueTeamRoster = this.state.game.blueTeam.map((name, i) => (
         <li key={i}>{name}</li>
       ));
@@ -94,7 +96,7 @@ class TPTGameHost extends Component {
         <div
           className="bottom"
           id="bottom"
-          style={{ background: "rgb(238, 16, 16)" }}
+          style={{ background: "rgb(238, 16, 16)" }} //hardcoded
         >
           <audio id="buzzerSound" src="buzzer.mp3" />
           <span> {this.state.game.buzzer.buzzedIn} </span>
