@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
-} from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import firebase from "firebase";
 import base, { firebaseApp } from "./base";
 import Play from "./components/Play";
@@ -23,7 +17,7 @@ class App extends Component {
     this.state = {
       authed: false,
       loading: true,
-      games: [],
+      activeGames: {},
       user: null
     };
   }
@@ -35,7 +29,7 @@ class App extends Component {
       }
     });
 
-    this.removeListener = firebase.auth().onAuthStateChanged(user => {
+    this.removeAuthListener = firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.authHandler({ user });
       } else {
@@ -45,25 +39,52 @@ class App extends Component {
         });
       }
     });
+
+    this.activeGamesRef = base.bindToState("activeGames", {
+      context: this,
+      state: "activeGames"
+    });
   }
 
   componentWillUnmount() {
-    this.removeListener();
+    this.removeAuthListener();
+    base.removeBinding(this.activeGamesRef);
   }
 
   authHandler = async authData => {
-    let user = {
-      uid: authData.user.uid,
-      displayName: authData.user.displayName,
-      email: authData.user.email,
-      photoURL: authData.user.photoURL
-    };
+    let user = {};
 
-    this.setState({
-      user,
-      authed: true,
-      loading: false
-    });
+    base
+      .fetch(`users/${authData.user.uid}`, { asArray: false })
+      .then(returnUser => {
+        if (returnUser.uid) {
+          user = returnUser;
+        } else {
+          user = {
+            uid: authData.user.uid,
+            displayName: authData.user.displayName,
+            email: authData.user.email,
+            photoURL: authData.user.photoURL
+          };
+
+          base
+            .post(`users/${user.uid}/`, {
+              data: user
+            })
+            .then(() => {
+              console.log("Saved new user!");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+
+        this.setState({
+          user,
+          authed: true,
+          loading: false
+        });
+      });
   };
 
   authenticate = () => {
@@ -113,12 +134,14 @@ class App extends Component {
             component={Host}
             authed={this.state.authed}
             user={this.state.user}
+            activeGames={Object.keys(this.state.activeGames)}
           />
           <PrivateRoute
             path="/play"
             component={Play}
             authed={this.state.authed}
             user={this.state.user}
+            activeGames={Object.keys(this.state.activeGames)}
           />
         </div>
       </Router>
