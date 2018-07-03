@@ -14,7 +14,7 @@ class TPTGamePlay extends Component {
   }
 
   componentDidMount() {
-    this.gameRef = base.syncState(`games/${this.props.gameCode}`, {
+    this.gameRef = base.bindToState(`activeGames/${this.props.gameCode}`, {
       context: this,
       state: "game"
     });
@@ -28,22 +28,24 @@ class TPTGamePlay extends Component {
     let gameCode = this.state.game.gameCode;
     console.log(this.state.user);
 
-    base.fetch(`games/${gameCode}/buzzer`, { asArray: false }).then(buzzer => {
-      console.log(buzzer);
-      if (buzzer.buzzerOn) {
-        base
-          .post(`games/${gameCode}/buzzer`, {
-            data: { buzzerOn: false, buzzedIn: "Irman" }
-          })
-          .then(() => {
-            //play buzzer sound
-            console.log("buzzed in", { buzzerOn: false, buzzedIn: "Irman" });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      }
-    });
+    base
+      .fetch(`activeGames/${gameCode}/buzzer`, { asArray: false })
+      .then(buzzer => {
+        console.log(buzzer);
+        if (buzzer.buzzerOn) {
+          base
+            .post(`activeGames/${gameCode}/buzzer`, {
+              data: { buzzerOn: false, buzzedIn: this.props.user.displayName }
+            })
+            .then(() => {
+              //play buzzer sound
+              console.log("buzzed in", { buzzerOn: false, buzzedIn: "Irman" });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
+      });
   }
 
   render() {
@@ -76,7 +78,7 @@ class TPTGamePlay extends Component {
           style={{ background: "rgb(238, 16, 16)" }}
         >
           <audio id="buzzerSound" src="buzzer.mp3" />
-          <span>{this.props.user.displayName}</span>
+          <span>{this.state.game.buzzer.buzzedIn}</span>
         </div>
       );
     }

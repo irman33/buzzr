@@ -22,7 +22,7 @@ class TPTGameHost extends Component {
   resetBuzzer() {
     let gameCode = this.state.game.gameCode;
     base
-      .post(`games/${gameCode}/buzzer`, {
+      .post(`activeGames/${gameCode}/buzzer`, {
         data: { buzzerOn: true, buzzedIn: "" }
       })
       .then(() => {
@@ -59,7 +59,7 @@ class TPTGameHost extends Component {
   }
 
   componentDidMount() {
-    this.gameRef = base.syncState(`games/${this.props.game.gameCode}`, {
+    this.gameRef = base.syncState(`activeGames/${this.props.game.gameCode}`, {
       context: this,
       state: "game"
     });
@@ -97,7 +97,7 @@ class TPTGameHost extends Component {
           style={{ background: "rgb(238, 16, 16)" }}
         >
           <audio id="buzzerSound" src="buzzer.mp3" />
-          <span> IRMAN </span>
+          <span> {this.state.game.buzzer.buzzedIn} </span>
         </div>
       );
     }
