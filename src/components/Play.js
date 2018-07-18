@@ -9,48 +9,29 @@ class Play extends Component {
     super(props);
 
     this.state = {
-      gameCode: null,
       gameJoined: false,
       teamSelected: false,
       user: this.props.user,
-      team: "",
       game: {}
     };
   }
 
   joinGame = gameCode => {
+    // Error is GameCode not found
     if (!this.props.activeGames.includes(gameCode)) {
       console.log("GameCode Not Found!");
       alert(`Gamecode ${gameCode} does not exist`);
       return;
     }
 
+    // Pull gamedata and save to state
     base.fetch(`activeGames/${gameCode}`, { asArray: false }).then(game => {
-      this.setState({ game, gameJoined: true, gameCode });
+      this.setState({ game, gameJoined: true });
     });
   };
 
   selectTeam = team => {
-    // Sign into game's team roster
-    base
-      .fetch(`activeGames/${this.state.game.gameCode}/${team}Team`, {
-        asArray: true
-      })
-      .then(teamRoster => {
-        console.log(teamRoster);
-        teamRoster.push(this.state.user.displayName);
-
-        base
-          .post(`activeGames/${this.state.game.gameCode}/${team}Team`, {
-            data: teamRoster
-          })
-          .then(() => {
-            console.log("Roster Updated", teamRoster);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      });
+    console.log(team);
 
     let gameData = {
       activeGame: true,
@@ -65,12 +46,14 @@ class Play extends Component {
       })
       .then(() => {
         console.log("User Game Updated", gameData);
+        let updatedUser = { ...this.state.user };
+        updatedUser.game = gameData;
+
+        this.setState({ teamSelected: true, user: updatedUser });
       })
       .catch(err => {
         console.log(err);
       });
-
-    this.setState({ teamSelected: true, team });
   };
 
   render() {
@@ -87,7 +70,7 @@ class Play extends Component {
       );
 
     return (
-      <TPTGamePlay user={this.props.user} gameCode={this.state.gameCode} />
+      <TPTGamePlay user={this.state.user} gameCode={this.state.game.gameCode} />
     );
   }
 }
