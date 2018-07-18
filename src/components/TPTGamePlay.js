@@ -18,10 +18,64 @@ class TPTGamePlay extends Component {
       context: this,
       state: "game"
     });
+
+    // Sign into team Roster using info from User Obj
+    base
+      .fetch(`activeGames/${this.props.gameCode}/${this.props.user.team}Team`, {
+        asArray: true
+      })
+      .then(teamRoster => {
+        console.log(teamRoster);
+        teamRoster.push(this.props.user.displayName);
+
+        base
+          .post(
+            `activeGames/${this.props.gameCode}/${
+              this.props.user.game.team
+            }Team`,
+            {
+              data: teamRoster
+            }
+          )
+          .then(() => {
+            console.log("Roster Updated", teamRoster);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
   }
 
   componentWillUnmount() {
     base.removeBinding(this.gameRef);
+
+    // Sign out of team Roster
+    base
+      .fetch(`activeGames/${this.props.gameCode}/${this.props.user.team}Team`, {
+        asArray: true
+      })
+      .then(teamRoster => {
+        console.log(teamRoster);
+
+        const index = teamRoster.indexOf(this.props.user.displayName);
+        if (index !== -1) teamRoster.splice(index, 1);
+
+        base
+          .post(
+            `activeGames/${this.props.gameCode}/${
+              this.props.user.game.team
+            }Team`,
+            {
+              data: teamRoster
+            }
+          )
+          .then(() => {
+            console.log("Roster Updated", teamRoster);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      });
   }
 
   buzz() {
